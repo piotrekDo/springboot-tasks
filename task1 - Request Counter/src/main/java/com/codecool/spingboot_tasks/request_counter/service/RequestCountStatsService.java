@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RequestCountStatsService {
@@ -22,10 +23,12 @@ public class RequestCountStatsService {
     private final Map<String, Integer> stats = new HashMap<>();
 
     public void increaseCounter(String method) throws Exception {
-        throw new RuntimeException("Not implemented");
+        stats.put(method, stats.getOrDefault(method, 0) + 1);
     }
 
     public List<Statistics> getStatistics() {
-        throw new RuntimeException("Not implemented");
+        return stats.entrySet().stream()
+                .map(entry -> new Statistics(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
