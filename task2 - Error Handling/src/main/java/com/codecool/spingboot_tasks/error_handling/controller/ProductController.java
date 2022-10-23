@@ -4,11 +4,13 @@ import com.codecool.spingboot_tasks.error_handling.model.Product;
 import com.codecool.spingboot_tasks.error_handling.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -17,13 +19,15 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
+    @GetMapping()
     public List<Product> getProducts() {
+        System.out.println("LOOL");
         return productService.getProducts();
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public List<Product> getProducts(@PathVariable long id) {
+        System.out.println("LOOL");
         return productService.getProduct(id);
     }
 

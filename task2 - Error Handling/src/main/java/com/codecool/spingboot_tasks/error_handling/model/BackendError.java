@@ -2,11 +2,12 @@ package com.codecool.spingboot_tasks.error_handling.model;
 
 public class BackendError {
     private String msg;
-    private int level;
+    private Level level;
 
-    public BackendError(String message, int i) {
-        this.msg = message;
-        this.level = i;
+
+    public BackendError(String msg, Level level) {
+        this.msg = msg;
+        this.level = level;
     }
 
     public String getMsg() {
@@ -17,11 +18,25 @@ public class BackendError {
         this.msg = msg;
     }
 
-    public int getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Level level) {
         this.level = level;
+    }
+
+   public enum Level {
+        INFO("Info"), WARN("Warning"), ERROR("Error");
+
+        private final String message;
+
+        public String getMessage() {
+            return message;
+        }
+
+        Level(String message) {
+            this.message = message;
+        }
     }
 }
