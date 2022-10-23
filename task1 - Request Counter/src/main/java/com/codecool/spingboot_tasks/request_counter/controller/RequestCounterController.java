@@ -1,8 +1,10 @@
 package com.codecool.spingboot_tasks.request_counter.controller;
 
+import com.codecool.spingboot_tasks.request_counter.error.ErrorEntity;
 import com.codecool.spingboot_tasks.request_counter.model.Statistics;
 import com.codecool.spingboot_tasks.request_counter.service.RequestCountStatsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +58,13 @@ public class RequestCounterController {
     public ResponseEntity<Void> patch() throws Exception {
         service.increaseCounter(RequestCountStatsService.PATCH);
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    ResponseEntity<ErrorEntity<String>> handleNoSuchElementException(Exception e) {
+        return new ResponseEntity<>(new ErrorEntity<>(HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
 }
